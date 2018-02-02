@@ -24,7 +24,7 @@ int main (int argc, char *argv[]) {
   semlock.sem_flg=0;
 
   while(1){
-    // lock
+    // lock: semaphoreが一個の前提の実装
     semlock.sem_op=-1;
     if (semop (sid, &semlock, 1) >= 0) {
       printf("a + b = %d\n", *a + *b);
