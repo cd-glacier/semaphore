@@ -39,11 +39,10 @@ int main() {
   *b = 0;
 
   while(1) {
-    printf("(a, b) = (%d, %d)\n", *a, *b);
-
     // lock
     semlock.sem_op=-1;
-    if (semop (sid, & semlock, 1) > 0) {
+    if (semop (sid, &semlock, 1) >= 0) {
+      printf("(a, b) = (%d, %d)\n", *a, *b);
       *a = *a - 1;
       sleep(1);
       *b = *b + 1;
@@ -55,6 +54,9 @@ int main() {
     semop(sid, &semlock, 1);
 
     if (*a == 0 && *b == 100) {
+      printf("complete!");
+		  shmdt(a);
+		  shmdt(b);
       break;
     }
   }

@@ -6,8 +6,7 @@
 #include <string.h>
 
 int main() {
-  int aAddress = shmget (IPC_PRIVATE, sizeof(int), IPC_CREAT|0666);
-  int bAddress = shmget (IPC_PRIVATE, sizeof(int), IPC_CREAT|0666);
+  int aAddress = shmget (IPC_PRIVATE, sizeof(int), IPC_CREAT|0666); int bAddress = shmget (IPC_PRIVATE, sizeof(int), IPC_CREAT|0666);
 
   int *a = (int *) shmat (aAddress, (void *) 0, 0);
   int *b = (int *) shmat (bAddress, (void *) 0, 0);
@@ -34,6 +33,8 @@ int main() {
     sleep(1);
 
     if (*a == 0 && *b == 100) {
+		  shmdt(a);
+		  shmdt(b);
       break;
     }
   }
